@@ -1,0 +1,3 @@
+﻿ServerIP=127.0.0.1
+ProgID=Kepware.KEPServerEX.V6
+UpdateRate=200

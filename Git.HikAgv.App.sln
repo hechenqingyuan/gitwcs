@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Git.HikAgv.App", "Git.HikAgv.App\Git.HikAgv.App.csproj", "{B23C1FB7-8C46-4437-9CA3-DE3D2497CE9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Git.HikAgv.Hsl.Modbusclient.Test", "Git.HikAgv.Hsl.Modbusclient.Test\Git.HikAgv.Hsl.Modbusclient.Test.csproj", "{B370C9FC-B8B0-41E6-9F0E-588906CAF096}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Git.Mes.HikRobot.SDK", "Git.Mes.HikRobot.SDK\Git.Mes.HikRobot.SDK.csproj", "{D1EEA3E8-B8F7-49D0-8DC4-7C112A5426E2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B23C1FB7-8C46-4437-9CA3-DE3D2497CE9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B23C1FB7-8C46-4437-9CA3-DE3D2497CE9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B23C1FB7-8C46-4437-9CA3-DE3D2497CE9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B23C1FB7-8C46-4437-9CA3-DE3D2497CE9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B370C9FC-B8B0-41E6-9F0E-588906CAF096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B370C9FC-B8B0-41E6-9F0E-588906CAF096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B370C9FC-B8B0-41E6-9F0E-588906CAF096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B370C9FC-B8B0-41E6-9F0E-588906CAF096}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1EEA3E8-B8F7-49D0-8DC4-7C112A5426E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1EEA3E8-B8F7-49D0-8DC4-7C112A5426E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1EEA3E8-B8F7-49D0-8DC4-7C112A5426E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1EEA3E8-B8F7-49D0-8DC4-7C112A5426E2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {80864C42-5044-4EFB-B4FC-A77B1FC12F98}
+	EndGlobalSection
+EndGlobal

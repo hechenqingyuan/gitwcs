@@ -1,0 +1,146 @@
+﻿[
+	{
+		PositionNum:"4",
+		PositionCode:"A1",
+		MapDataCode:"YYGF",
+		MapShortName:"YYGF",
+		PositionName:"A-1",
+		AreaCode:"A",
+		HasCon:"1",
+		PodCode:"",
+		PlcCode:"Inovance1",
+		Description:"A-1"
+	},
+	{
+		PositionNum:"3",
+		PositionCode:"A2",
+		MapDataCode:"YYGF",
+		MapShortName:"YYGF",
+		PositionName:"A-2",
+		AreaCode:"A",
+		HasCon:"1",
+		PodCode:"",
+		PlcCode:"Inovance1",
+		Description:"A-2"
+	},
+	{
+		PositionNum:"2",
+		PositionCode:"B2",
+		MapDataCode:"YYGF",
+		MapShortName:"YYGF",
+		PositionName:"B-2",
+		AreaCode:"B",
+		HasCon:"1",
+		PodCode:"",
+		PlcCode:"Inovance1",
+		Description:"B-2"
+	},
+	{
+		PositionNum:"1",
+		PositionCode:"B1",
+		MapDataCode:"YYGF",
+		MapShortName:"YYGF",
+		PositionName:"B-1",
+		AreaCode:"B",
+		HasCon:"0",
+		PodCode:"",
+		PlcCode:"Inovance1",
+		Description:"B-1"
+	},
+
+
+
+
+	{
+		PositionNum:"6",
+		PositionCode:"P3",
+		MapDataCode:"YYGF",
+		MapShortName:"YYGF",
+		PositionName:"Apply_A-3",
+		AreaCode:"A",
+		HasCon:"0",
+		PodCode:"",
+		PlcCode:"Inovance1",
+		Description:"P3暂停点"
+	},
+	{
+		PositionNum:"7",
+		PositionCode:"P2",
+		MapDataCode:"YYGF",
+		MapShortName:"YYGF",
+		PositionName:"Apply_A-2",
+		AreaCode:"A",
+		HasCon:"0",
+		PodCode:"",
+		PlcCode:"Inovance1",
+		Description:"P2暂停点"
+	},
+	{
+		PositionNum:"5",
+		PositionCode:"P1",
+		MapDataCode:"YYGF",
+		MapShortName:"YYGF",
+		PositionName:"Apply_A-1",
+		AreaCode:"A",
+		HasCon:"0",
+		PodCode:"",
+		PlcCode:"Inovance1",
+		Description:"P1暂停点"
+	},
+	
+	
+
+
+
+
+
+	{
+		PositionNum:"21",
+		PositionCode:"C1",
+		MapDataCode:"YYGF",
+		MapShortName:"YYGF",
+		PositionName:"C-1",
+		AreaCode:"C",
+		HasCon:"1",
+		PodCode:"",
+		PlcCode:"Inovance2",
+		Description:"C-1"
+	},
+	{
+		PositionNum:"22",
+		PositionCode:"C2",
+		MapDataCode:"YYGF",
+		MapShortName:"YYGF",
+		PositionName:"C-2",
+		AreaCode:"C",
+		HasCon:"1",
+		PodCode:"",
+		PlcCode:"Inovance2",
+		Description:"C-2"
+	},
+	{
+		PositionNum:"27",
+		PositionCode:"D2",
+		MapDataCode:"YYGF",
+		MapShortName:"YYGF",
+		PositionName:"D-2",
+		AreaCode:"D",
+		HasCon:"1",
+		PodCode:"",
+		PlcCode:"Inovance2",
+		Description:"D-2"
+	},
+	{
+		PositionNum:"28",
+		PositionCode:"D1",
+		MapDataCode:"YYGF",
+		MapShortName:"YYGF",
+		PositionName:"D-1",
+		AreaCode:"D",
+		HasCon:"0",
+		PodCode:"",
+		PlcCode:"Inovance2",
+		Description:"D-1"
+	},
+
+]

@@ -1,0 +1,546 @@
+﻿2019-9-3
+1.解决Miniblink读取内嵌SVG不显示的问题
+2.解决DSkinTableLayoutPanel边框显示问题
+3.修复PictureBox缩放图片差一像素问题
+3.DSkinNewDatetimePicker的时分秒有滚动显示当前数值，和支持设置选中的颜色SeleckBackColor
+
+2019-7-22
+1.修复DuiTextBox的AllowPasteImage属性不生效问题
+
+2019-6-24
+1.解决DuiTextBox的密码模式粘贴问题
+2.解决DuiComboBox的SelectValue的问题
+3.解决GridList的EndEdit事件触发两次的问题
+
+2019-5-13
+1.解决DuiTextBox对象引用异常问题
+
+2019-4-22
+1.DSkinComboBox支持DataSource绑定数据，刷新数据调用DataBind
+2.增加DSkin2DChart、Dui2DChart、DSkinMiniblink、DuiTreeView
+3.修改部分控件默认值
+4.取消DSkinCheckBox、DuiCheckBox、DuiRadioButton、DSkinRadioButton的AdaptImage属性的强制尺寸
+5.DSkinForm支持直接放DuiTextBox了，推荐所有界面都用虚拟控件，这样性能更好，而且不会出现系统卡顿问题
+6.DuiTextBox支持HTML格式的多图片复制粘贴
+7.新WebUI的MiniBlink增加SendMessage支持跨Page调用方法
+8.增加扩展方法ToJson，将对象转Json字符串，方便在WebUI里使用 使用前加using DSkin.Common
+9.增加FastReflection提供高性能反射调用。使用先using DSkin.Common，                        
+	var type = this.GetType();
+	type.GetMethod(methodName).FastInvoke();
+10.文档都更新了
+
+2019-3-22
+1.支持新加密狗的识别
+
+2018-9-15
+1.新WebUI支持Vue的methods绑定，复杂的JS类型C#中用MiniblinkPInvoke.JsValue类型表示。如果页面加载慢，可以把Mb内核换成更大的包含node的dll，性能更好。
+2.调整Miniblink目录位置判断
+3.解决虚拟控件的Dock布局错误问题
+
+2018-8-27 更新-小红帽
+1.解决DSkinTextBox光标不闪烁问题
+2.解决容器控件移除子控件事件没注销的问题
+
+2018-8-17 更新
+1.解决DSkinForm设置Owner之后资源不释放的问题
+
+2018-7-12 更新-小红帽
+1.增加动画故事板 DSkin.Animations.Storyboard
+2.解决DSkinToolStrip在没有焦点时候不触发点击事件的问题。设置ClickThrough 属性
+3.解决DSkinForm设置Owner之后资源不释放的问题
+
+2018-4-26 更新-小红帽
+1.虚拟控件列表支持显示当前项目中设计的模板类型
+2.解决Miniblink里int bool 数据转换问题
+3.解决DSkinTreeView一个无限递归的问题
+4.解决WebUI使用最新版的mb.dll报错的问题
+5.增加DuiGridList
+
+2018-4-2 更新-小红帽
+1.解决DSkinGridList绑定数据不显示的问题
+2.MiniBlink一处内存泄露问题
+3.修改一部分DSkinChart属性,线条颜色设置 Breeze，Aurora，StarryNight，增加曲线
+4.DuiMiniBlink增加NewWindow事件
+5.右键菜单的打钩可以改图片CheckedImage
+6.Miniblink WebUI开发模式增加模板页
+
+2018-3-30 更新-小红帽
+1.解决.net4.0的 MiniBlink调试异常
+
+2018-3-26 更新-小红帽
+1.新增加DSKinNewDatatimePicker和DSKinNewPanel
+2.增加新的浏览器内核Miniblink,DuiMiniBlink和新WebUI开发模式，具体使用方式看入门文档
+3.解决一些小BUG
+4.DSkinGridList的 ControlType.DuiCheckBox 的时候Value改变不会设置Text了
+5.DSkinGridList增加 EditableTemplate可编辑文字模板以及 StartEdit 和EndEdit 事件
+
+2017-11-16 更新-小红帽
+1.解决DuiTextBox出现死循环的问题
+
+2017-10-14 更新-小红帽
+1.解决DSkinTreeView使用自定义模板报错和样式属性没有生效的问题
+2.解决WebUI里封装的JQuery的一部分方法调用没有效果的问题
+3.解决DSkinListBox的Tab焦点切换问题
+4.解决DSkinDynamicListBox删除Item之后滚动条计算错误问题
+
+2017-09-01 更新-小红帽
+1.解决DSkinTreeView动态添加节点错乱和添加节点不会自动折叠了
+2.JQuery封装进一步完善
+3.解决WebUI的内存泄露问题
+4.增加加密狗用户拔出缓冲10秒可操作提示
+
+2017-07-14 更新-小红帽
+1.解决WebUI框架里加载在线页面时候报错问题
+2.解决DSkinMessageBox直接在Program里直接调用调试的时候报跨线程的问题
+
+2017-05-19 更新-小红帽
+1.DSkinChart增加坐标轴颜色控制，浮点数值显示保留两位小数，删除不必要的趋势时间属性
+2.解决DSkinGridList的DateTime类型排序问题，以及不稳定排序问题
+3.增加浏览器JQuery的操作封装
+4.解决HtmlLabel部分元素无法触发事件的问题
+5.增加WebUI里框架页面和C#类的映射
+
+2017-04-23 更新-小红帽
+1.解决DSkinGridList的Cell设置为DuiTextBox出现死循环问题
+2.DSkinGridList的Cell设置为DuiCheckBox不会自动显示True和False文字了
+3.完善虚拟控件和实体控件直接的焦点切换，可以用Tab键切换之间的焦点
+
+2017-04-15 更新-小红帽
+1.解决DuiTextBox文字布局的BUG
+2.DSkinGridList的列增加MaxWidth
+
+2017-04-05 更新-小红帽
+1.解决DSkinBrowser在.net 4.0 报错的问题
+2.增加EweCore的OnSetData事件，可以自己通过file:///协议的URL加载资源
+3.WebUI里增加OnDocumentReady()事件，在这个事件里可以调用C#的方法。默认的js里的load事件或者JQuery的ready事件里无法调用C#方法，除非加延迟
+4.JS错误可以看控制台输出
+
+2017-03-25 更新-小红帽
+1.解决DuiBrowser的URL属性不能获取跳转之后的URL的问题
+
+2017-03-25 更新-小红帽
+1.解决部分电脑使用ewe报错问题，提高稳定性
+2.保留之前的wke的DuiBrowser，并改名为DuiWkeBrowser
+3.保留之前的wke的DSkinBrowser，并改名为DSkinWkeBrowser
+
+2017-03-23 更新-小红帽
+1.DSkinBrowser、DuiBrowser的内核更新为ewe，完善C#和JS的相互调用
+2.增加Html开发桌面应用的快捷方案
+3.修复VS2017及部分用户调试弹窗的问题
+
+2017-01-22 更新-小红帽
+1.解决截图控件绘图操作不可见的问题
+2.DSkinBrowser、DuiBrowser的InvokeJS的返回值改成JsValue
+
+2017-01-11 更新-小红帽
+1.FontAwesomeCharsEditor属性编辑可以在其他控件上使用了
+2.增加DSkinIcon
+3.DSkinNumericUpDown可以输入.
+4.解决DuiTextBox复制报错的问题
+
+2016-10-12 更新-乔克斯
+1.修复授权中的一个异常。
+
+2016-9-19 更新-小红帽
+1.解决窗体圆角之后的像素误差
+2.DSkinGridListColumn增加最小拖拽宽度属性
+3.修复DuiTextBox关键词渲染的BUG
+4.解决Button的属性冲突导致的VS属性不能显示
+5.解决HtmlLabel的Ctrl C不能复制的问题
+6.解决DSkinGridList鼠标调整列宽度错位的问题
+
+2016-7-06 更新-小红帽
+1.修复设置窗体Text时阴影的问题
+2.DuiTextBox增加Home，End，PageUp,PageDown按键操作
+3.修复DSKinListBox绑定数据源的问题
+4.修复DSKinGridList自定义分页的问题
+5.修复DSkinToolTip最后文字不显示的问题
+6.修复虚拟控件OriginalSource属性错误的问题
+7.修复各种小BUG。
+
+2016-5-19 15:33:00 更新-小红帽
+1.修复DuiTextBox密码框模式下编辑的问题
+2.修复窗体阴影分层问题
+3.PictureBrowseForm 可以控制图片显示尺寸
+4.DuiBrowser和DSkinBrowser可以在控件加载之前手动创建内核，CreateWkeCore()
+5.ListBox增加项目选择
+6.解决DSkinDataGridView滚动条显示问题
+7.解决TabControl设置ImageList卡顿问题
+8.解决鼠标拖动DuiTextBox卡顿的问题
+9.DSkinToolStrip、DSkinMenuStrip、DSkinContextMenuStrip增加TitleLineColor标题分割线
+10.DSKinGridListColumn可以直接设置列控件类型和停靠位置
+11.DSKinGridList增加CustomPage 属性，可以自定义分页，RowCount属性可以设置总数据量
+12.解决HTMLLabel的渲染BUG，用来做模板的时候不会出现滚动图像跑到外面了
+13.解决DSkinChatRichTextBox插入连接乱码问题
+
+2016-4-11 17:01:06 更新-小红帽
+1.修复截图出现的问题。
+
+2016-4-2 13:40:00 更新-小红帽
+1.DSkinGridList 增加一个添加行数据的扩展方法，需要using DSkin.Controls;   dSkinGridList1.Rows.AddRow("数据",123,.....);
+2.修复混淆引起的列表报错问题。
+
+2016-3-11 16:49:00 更新-小红帽
+1.虚拟控件增加 SendTask 方法，用于发送任务消息，承载的实体控件或者父级虚拟控件可以通过绑定AcceptTask事件来处理任务消息，适合在自定义模板中使用，具体用法看入门文档
+2..net2.0增加了System.Linq 可以使用linq查询了
+3.DSkinDataGridView增加EnabledScrollbarBeautify属性
+4.增加 DSkinDynamicListBox ，支持鼠标拖拽排序
+5.增加 DSkinChart 图表控件，包含折线，柱状图，圆饼图，2D和3D模式
+6.优化布局代码使用方式和性能，大多数情况可以不需要调用LayoutContent了
+7.因为性能原因DuiBaseControl的ToolTip由HtmlTip改为普通的ToolTip
+8.修复了边框渲染问题，以及DuiTextBox焦点切换问题
+9.增加 DSkinCode 验证码组件，NewCode()创建验证码并返回验证码的值，还有CodeStr验证码值属性。
+
+2016-3-1 19:30:00 更新-小红帽
+1.DSkinTableLayoutPanel增加单元格线条绘制
+2.解决DuiTextBox在一些控件上无法调用输入法的问题
+3.调整DuiBaseControl的边框渲染
+4.系统按钮增加Image属性，设置图标
+5.进一步完善DSkinDateTimePicker
+6.DuiBrowser 和DSkinBrowser增加TitleChanged、LoadingFinish、ConsoleMessage、AlertBox、PromptBox、ConfirmBox事件
+7.虚拟控件增加Tab键焦点切换，需要为同一个实体托管控件，而且需要有其中一个虚拟获取焦点
+
+2016-2-16 18:10:58 更新-小红帽
+1.修复DuiBrowser 和DSkinBrowser 上层添加控件显示问题
+2.修复DuiTextBox Del键不能删除的问题
+3.修复部分系统打不开问题。
+4.优化组件显示效率。
+5.修复窗体消息偶发BUG。
+
+2016-1-15 17:20:00 更新-小红帽
+1.修复DSkinCombobox编辑模式下文字显示问题
+2.修复实体容器控件设计模式下无法添加虚拟控件的问题
+3.增加DuiBrowser 和DSkinBrowser 控件
+4.修复实体控件一部分事件不触发的问题
+5.DuiTextBox加入关键词染色功能
+6.修复了其他小BUG
+
+2015-12-31 13:55:00 更新-小红帽
+1.修复MenuStrip的下拉菜单有快捷键时文字错乱的问题
+2.修复HtmlLabel表格布局问题，等等其他小问题
+3.修复DSkinTextBox的滚动条在Layered模式下显示问题
+4.修复DSkinTabControl设计模式问题
+5.ProgressBarForeImageDrawModes重命名为ForeImageDrawModes，TrackBar增加ForeImage属性
+6.窗体加入MoveForm（调用窗体移动）方法。
+
+2015-12-5 16:51:00 更新-小红帽
+1.DSkinListBox增加DSkinListItemTemplate模板和数据源绑定
+2.ListBox增加浮动布局EnabledFloat
+3.重写窗体阴影算法
+4.DuiTextBox，性能优化，内容控件由Controls改成Items，增加RightToLeft属性用于支持阿拉伯文字等右到左排列的文字。可以通过处理KeyPress来限制文本输入，增加TextAlign属性，有限支持图片复制和粘贴
+5.HtmlLabel支持文字框选复制，图片复制，GIF播放，区块元素支持鼠标事件绑定
+6.Button增加ButtonStyle属性按钮样式选择
+
+2015-10-27 17:12:00 更新-小红帽
+1.解决上个版本遗漏的DSkinMessageBox的问题
+2.重写了ControlHost
+3.Button控件添加了Image属性
+4.DuiCombobox支持编辑
+5.解决DSkinPanel在非分层模式下边框绘制的问题
+6.重写DSkinNumericUpDown，可以支持Layered模式
+7.解决dskin在管理员权限下显示阴影最小化之后无法还原问题
+
+2015-10-19 16:07:00 更新-小红帽
+1.解决DSkinGridList的ColumnFill属性问题
+2.修改淡入淡出动画的实现方式，提高淡入淡出动画的速度
+3.解决窗体隐藏之后窗体阴影不显示的问题
+4.将COM接口移到DSkin.OLE命名空间里
+5.解决TabBar的异常问题。
+
+2015-10-9 21:27:55 更新-乔克斯
+1.DSkinTabControl增加属性：
+（PageNormlTxtColor：Page标签默认时字体色）
+（PageHoverTxtColor：Page标签悬浮时字体色）
+（PageDownTxtColor：Page标签按下时字体色）
+（ImgSize：选项卡上图标的大小）
+（PageImagePosition：指定选项卡上图像与文本的对齐方式）
+（PageTextAlign：将在选项卡标签上显示的文本的对齐方式）
+（ImgTxtSpace：选项卡文本与图标之间的间隙）
+（ImgTxtOffset：Page图标文本整体偏移。）
+（IcoStateSwitch：是否开启Tab图标三效状态切换）
+2.优化SkinTabControl，默认添加的TabPage就是DSkinTabPage。
+3.DSkinTabPage增加属性：
+（TabItemImage：当前Tab选项卡图标，这里设置图标不会有锯齿）
+（IsSelectTab：是否能选中当前项）
+（Enabled：是否禁用当前Tab选项卡）
+（CloseButtonVisble：是否显示关闭按钮）
+4.修复32位系统加密狗授权异常问题。
+
+2015-9-29 17:25:00 更新-小红帽
+1.DSkinGridList性能优化，提高绑定大量数据的速度
+2.解决PictureBox播放GIF在DSkinTabControl里线程异常问题
+
+2015-9-3 16:00:00 更新-小红帽
+1.虚拟控件设计模式支持方向键调整位置
+2.添加DSkinGridList控件
+3.解决DSkinChatRichTextBox鼠标在里面无法输入中文的问题
+4.DSkinGroupBox支持调整圆角大小
+5.增加DuiIcon支持FontAwesome图标显示，内置近600个矢量图标
+6.DSkinTreeView优化性能和增加节点模板，用法和DSKinGridList的一样
+7.增加DrawDisabled属性，可以绘制禁用效果
+
+2015-8-15 03:36:45 更新-乔克斯
+1.修复DSkinGroupBox修改字体颜色无效问题。
+2.修复DUI组件与多余组件出现工具箱的问题。
+3.HtmlToolTip组件更名DSkinHtmlToolTip。
+
+2015-8-11 21:48:00 更新-小红帽
+1.DSkinTreeView增加DragStarted和DragEnded事件，增加水平滚动条
+2.DSkinTabItem增加TabPage属性
+3.增加DSkinGroupBox
+
+2015-7-29 10:35:48 更新-乔克斯
+1.窗体内置属性（Aanhor：窗体贴边状态）
+2.修复DSkinToolTip控件文字位置显示异常问题。
+
+2015-7-23 17:40:00 更新-小红帽
+1.虚拟控件直接支持可视化设计，支持多选，支持单个虚拟控件的复制粘贴，粘贴后控件相对位置（Location）不变。
+    使用的时候右键添加组件，把继承类改成DuiBaseControl
+2.控件增加焦点框绘制属性
+3.DuiTextBox空格宽度调整
+4.增加DuiHtmlLabel，支持HTML解析显示
+5.DSkinTreeView可以设置SelectedNode增加SelectedNode事件
+
+2015-7-17 15:52:00 更新-小红帽
+1.DSkinTreeView增加CheckStateChanged事件和调整NodeClick事件
+2.修复ControlHost在按下Alt F4时候报错的问题
+3.调整DSkinUserControl的滚动条
+4.Label添加TextInnerPadding属性用来调整文本位置
+5.修复窗体隐藏时候尺寸修改再显示出来无效果的Bug
+
+2015-7-8 16:16:00 更新-小红帽
+1.解决DSkinToolStrip文本偏移问题
+2.增加DSkinTableLayoutPanel、DSkinFlowLayoutPanel、DSkinDateTimePicker
+3.修复DSkinToolStrip和DSkinMenuStrip不显示背景图的Bug
+
+2015-7-3 18:15:00 更新-小红帽
+1.DSkinMessageBox的继承样式增加字体和颜色的定义
+2.DSkinTabBar自动获取焦点属性
+3.增加IImageEffect图片特效接口和多个图片特效，当前需要注意的是如果使用图片特效，建议内部不要添加子控件，否则容易出现图像破裂的情况
+4.设计模式下Text属性支持多行编辑
+5.Combobox增加StringToItems属性可以将字符串转换为项目
+6.调整DSkinForm上面虚拟控件和系统按钮的层次
+
+2015-6-30 20:42:22 更新-小红帽
+1.修复DSkinListbox的Item双击事件不触发BUG。
+2.修复窗体边框BUG绘制。
+3.窗体新增InnerBorderColor属性。
+
+2015-6-30 17:15:26 更新-乔克斯
+1.优化启动时间，减小耗时。
+2.细节BUG修复。
+
+2015-6-26 20:00:00 更新-小红帽
+1.背景渲染增加背景图剪辑区域，可以裁剪背景图
+2.虚拟控件增加OriginPoint原点属性，可以控制旋转和缩放的原点
+
+2015-6-25 18:13:00 更新-小红帽
+1.公开ControlHost里面的HostForm
+2.修复DSkinDataGridView关闭后，在打开报错的问题
+3.设计模式下公开了DSkinTreeViewNode自定义属性
+4.修复了DSkinLinearGradientBrush渐变色只有两种的时候只能黑白色的问题
+5.DSkinTabControl增加PageRemoved事件，Page不主动释放
+
+2015-6-18 11:35:00 更新-小红帽
+1.增加画笔画刷控件DSkinPen、DSkinHatchBrush、DSkinLinearGradidenBrush、DSkinPathGradientBrush，这些控件可以设置框线条或者背景填充效果
+2.增加DSkinTreeView，暂时还不能横向滚动
+3.DSkinPanel滚动条在非Layered模式下也可以有效果了
+4.增加多个动画方法，使用前需要Using DSkin.DirectUI;
+5.虚拟控件增加查询方法，可以配合Lambda和Linq使用
+6.增加DuiListBox和DSkinListBox使用方法一样
+7.增加泛型集合Collection<T>，和List<T>类似，不过多了ItemAdded和ItemRemoved事件，方便用于自定义集合，在DSkin.Common里
+8.ControlHost可以多容器支持
+9.修复DSkinCombobox和DuiCombobox的HoverColor显示问题，以及不需要点击到控件也可以选择了
+10.DSkinTabControl增加关闭按钮
+11.增加DuiGraphics图形控件
+12.增加虚拟控件在设计模式下的行为控制，另外虚拟控件增加虚模式，控件可见，但是无法点击到
+13.加入几个简单的文字特效和文本省略号处理AutoEllipsis
+14.DSkinTabBar支持项目溢出鼠标滚轮滚动
+
+2015-6-7 14:52:54 更新-乔克斯
+1.对IsLayeredWindowForm窗体模式false下的DSkinDataGridView和DSkinPanel的滚动条进行美化。
+2.IsLayeredWindowForm等于false下，ScrollBarDrawImage类可对滚动条美化进行属性设置。
+
+2015-5-29 18:10:00 更新-小红帽
+1.虚拟控件增加ToolTip属性
+2.删除FindControl方法，以Controls["Name"]代替
+
+2015-5-28 17:56:36 更新-乔克斯
+1.修复繁体系统运行错误的BUG。
+2.优化DSkinListItem组件，添加用户组件继承就可以用。
+  使用方式：SkinListBox1.Items.Add(new UserControl4().DBaseControl.InnerDuiControl);
+
+2015-5-27 15:15:00 更新-小红帽
+1.修复DuiTrackBar指示按钮位置错位问题
+2.修复Checkbox设置图片报错问题
+3.DSkinForm可以在Layered模式下当成普通控件添加的到DSkinForm里面，并且可以显示内部控件
+
+2015-5-27 12:32:26 更新-乔克斯
+1.细节逻辑修复与更新。
+
+2015-5-24 17:40:00 更新-小红帽
+1.DuiCheckbox和DSkinCheckbox增加Indeterminate状态图片设置和CheckStateChanged事件
+2.DSkinContextMenuStrip增加文本渲染属性
+3.添加DSkinUserControl，使用的时候VS添加用户控件，修改继承为DSkinUserControl就可以了
+4.修复DuiTextbox设置文本的时候获取焦点输入文字报错问题
+5.DSkinButton和DuiButton增加圆角样式属性
+6.增加OpenGL封装类库，可以使用OpenGL在DSkin上绘制，当前这个只是用来研究和测试用，感兴趣的可以试试。
+  使用方法：在窗体上放一个DSkinBaseControl，设置位图缓存属性BitmapCache为True，
+		   注册dSkinBaseControl1的LayeredPaintEvent事件，在里面写   
+		   using (OpenGL gl = new OpenGL(e.Graphics))
+           {
+			//gl绘图代码
+		   }
+  重绘的时候调用dSkinBaseControl1.Invalidate();绘图的时候需要注意坐标转换
+
+2015-5-9 19:00 更新-小红帽
+1.DSkinBaseControl、DSkinLabel、DSkinButton等支持虚拟控件设计模式的可以通过鼠标拖拽复制（内部的虚拟控件不能复制）和控件排版
+2.虚拟控件可以通过Parent属性来更改所在的父容器
+3.修复DSkinTabControl没有选项卡报错问题
+4.修复DSkinTabBar有时候颜色没有根据选项卡变化而变化的Bug
+5.修复DSkinTextBox文字靠右和居中是光标位置错误问题
+
+2015-5-4 11:18:04 更新-乔克斯
+1.DSkinChatRichTextBox更新
+新增属性:
+(SelectControl:选中的控件)
+(ListControl:获取文本框内所有控件)
+(SelectControlPoint:选中的控件的索引位置点Point)
+(SelectControlIndex:选中的控件的索引位置)
+新增方法：
+(InsertControl:插入控件)
+2.新增文本框内子组件RichTxtControl：
+使用方法：（需新建用户组件继承RichTxtControl并重载CtrlMouseDown和CtrlMouseMove方法。）
+
+2015-5-2 21:46:00  更新-小红帽
+1.修复DSkinStrip的VS占用CPU的问题
+2.重写DuiProgressBar和DSkinProgressBar，支持Gif动态播放
+3.修复菜单控件设计模式闪烁出错问题。
+
+2015-4-27 9:15:00 更新-小红帽
+1.修复DSkinToolStrip文字不显示问题
+
+2015-4-26 17:00:00 更新-小红帽
+1.圆角边框渲染可以支持背景图圆角显示
+2.修复Combobox在边缘显示异常的问题
+3.修复DuiTextbox不能赋值和焦点的问题
+4.虚拟控件集合增加排序和筛选的方法
+5.提示DSkinListBox的性能，增加内容偏移属性
+6.DSkinPanel增加滚动条
+
+2015-4-16 17:11:00  更新-小红帽
+1.修复DSkinTextBox在容器控件边缘里显示错位问题
+2.进一步完善虚拟控件的属性的说明
+3.修复其他小Bug
+
+2015-4-11 12:14:00  更新-小红帽
+1.窗体动画重新修改，旋转缩放不会闪烁了。
+2.虚拟控件增加RotationAngle和ScaleSize特效属性
+3.修复了其他小Bug
+
+2015-4-10 22:18:27 更新-乔克斯
+1.DSkinChatRichTextBox控件添加InsertLink方法，插入自定义超链接。
+
+2015-4-9  14:44:00   更新-小红帽
+1.ControlHost增加TransparencyKey属性实现透明色
+2.修复了ControlHost和阴影提前显示问题
+3.虚拟控件加入继承父级的尺寸百分比的属性，自适应父级尺寸，DSkinListbox有效
+
+2015-4-1  15:04:00  更新-小红帽
+1.DSkinTabControl添加文本渲染属性和图片位置属性
+2.DSkinScrollBar添加ValueChanged事件
+3.修复DSkinMessageBox关闭之后，主窗体失去焦点问题
+4.修复窗体FormClosing和阴影关闭问题
+
+2015-4-1 12:52:55 更新-乔克斯
+1.修复SkinSplitContainer最小化还原后的异常问题。
+
+2015-3-28  17:00:00 更新-小红帽
+1.DSkinMenuStrip在Layered模式下支持背景透明
+2.修复DSkinMessageBox显示过大和弹出来被遮住的问题
+
+2015-3-27 16:45:15 更新-乔克斯
+1.修复SkinMenuStrip的渐变属性和边框属性BUG。
+
+2015-3-24 14:00:00  更新-小红帽
+1.修改九宫格绘制
+2.提升DSkinMessageBox动画速度
+3.添加DSkinFlashBox，支持Flash透明播放
+4.DSkinTextBox加入边框效果
+5.修复其他小Bug
+
+2015-3-17 15:32:43 更新-乔克斯
+1.修复窗体默认最大化时的偏移BUG。
+
+2015-3-13 18:36:00 更新-小红帽
+1.添加DSkinMessageBox
+2.修复DSkinToolStrip显示&不正确的Bug
+3.修复其他一些小Bug
+
+2015-3-6 22:25:00 更新-小红帽
+1.DSkinToolStrip支持Layered模式下背景透明
+2.添加DCSkinComboBox
+
+2015-3-4 18:45:00 更新-小红帽
+1.修复DSkinTextBox图像偏移问题
+2.修复DuiLabel文字显示对齐方式问题
+3.修复ControlHost在启用动画之后在TabControl里的问题
+
+2015-3-4 16:35:43 更新-乔克斯
+1.修复窗体双屏下全屏问题。
+2.修复截图窗体BUG异常。
+
+2015-2-17 16:38:00 更新-小红帽
+1.修复DSkinTextBox在设计模式TabControl切换时报错的Bug
+2.增加DSkinTabItem被选中的状态效果
+3.增加DSkinTabControl的ImageList的ImageKey的支持
+4.修复ControlHost在TabControl的Bug
+5.DSkinChatRichTextBox增加图片浏览
+6.修复其他小Bug
+
+2015-2-9 17:57:28 更新-乔克斯
+1.修复窗体在双屏模式下全屏问题。
+2.修复窗体边框None模式下无法全屏的问题。
+3.修复VS设计崩溃问题。
+
+2015-2-8 更新-小红帽
+1.添加主题继承，主题跟着变化，拖拽图片设置背景图
+
+2015-2-7 更新-小红帽
+1.添加DSkinProgressBar
+2.修复ControlHost在布局时候位置偏移问题
+3.修复其他小Bug
+
+2015-2-1 13:48:23 更新-乔克斯
+1.修复DSkinToolTip部分属性设置无效BUG。
+2.添加DSkinSplitContainer控件。
+
+2014-1-24 17:30:00 更新-小红帽
+1.增加DSkinTabBar
+
+2014-1-22 14:50:00 更新-小红帽
+1.增加主题设置
+2.修复小BUG
+
+2014-1-18 17:30:00 更新-小红帽
+1.完善DuiControl的Anchor布局
+
+2014-1-18 13:40:00 更新-小红帽
+1.大幅度提升绘制性能
+2.控件属性分类
+3.整合窗体系统按钮
+4.修复小Bug
+5.新增窗体样式
+
+2014-1-11 22:20:00 更新-小红帽
+1.修复系统按钮，控件光标等小Bug
+
+2014-1-9 14:10:00 更新-小红帽
+1.调整ILayered接口，增加位图缓存属性和PaintControl方法
+2.修复小Bug
+
+2014-1-8 21:40:00 更新-小红帽
+1.添加DuiTrackBar控件，并统一了DSkinTrackBar
+2.调整DuiControl的MouseEnter和MouseLeave事件
+3.删除了DSkinCheckButton
+4.解决滚动条的3角形的毛边问题

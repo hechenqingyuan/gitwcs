@@ -1,0 +1,422 @@
+﻿using Git.Framework.DataTypes;
+using Git.Framework.DataTypes.ExtensionMethods;
+using Git.Framework.Io;
+using Git.Framework.Log;
+using Git.Framework.Resource;
+using Git.Mes.HikRobot.SDK;
+using Git.Mes.HikRobot.SDK.ApiName;
+using Git.Mes.HikRobot.SDK.Model;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Git.HikAgv.App.Server
+{
+    /// <summary>
+    /// 加载地图信息
+    /// </summary>
+    public partial class LoadMapServer
+    { 
+        public LoadMapServer() { }
+
+        private string FileName = "Map.txt";
+
+        private Log log = Log.Instance(typeof(LoadMapServer));
+
+        /// <summary>
+        /// 加载地图配置
+        /// </summary>
+        public void Load()
+        {
+            string FilePath = FileManager.GetDomainRoot() + "\\MapConfig\\"+FileName;
+
+            StreamReader Sr = new StreamReader(FilePath);
+            string Content=Sr.ReadToEnd();
+            Sr.Close();
+
+            DomainContext.ListMap= HikJsonHelper.DeserializeObject<List<PositionEntity>>(Content);
+        }
+
+        /// <summary>
+        /// 保存地图数据信息
+        /// </summary>
+        public void Save()
+        {
+            string FilePath = FileManager.GetDomainRoot() + "\\MapConfig\\" + FileName;
+
+            string Content = "";
+
+            if (DomainContext.ListMap.IsNullOrEmpty())
+            {
+                Content = HikJsonHelper.SerializeObject(DomainContext.ListMap);
+            }
+            StreamWriter Sw = new StreamWriter(FilePath);
+            Sw.Write(Content);
+            Sw.Flush();
+            Sw.Close();
+        }
+
+        /// <summary>
+        /// 更新地图中料架与地图坐标之间的关系
+        /// </summary>
+        public void UpdateBin()
+        {
+            List<PalletEntity> ListPallet = DomainContext.ListPallet;
+            ListPallet = ListPallet.IsNull() ? new List<PalletEntity>() : ListPallet;
+
+            List<PositionEntity> ListMap = DomainContext.ListMap;
+            ListMap = ListMap.IsNull() ? new List<PositionEntity>() : ListMap;
+
+            QueryPodBerthAndMatRequestDTO Model = new QueryPodBerthAndMatRequestDTO();
+            Model.reqCode = ConvertHelper.NewGuid().SubString(25);
+            Model.reqTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            Model.clientCode = "WMS";
+            Model.tokenCode = "";
+            Model.podCode = "";
+            Model.materialLot = "";
+            Model.positionCode = "";
+            Model.areaCode = "";
+            Model.mapShortName = ListMap.First().MapShortName;
+
+            IHikTopClient client = new HikTopClientDefault();
+            JObject param = JObject.Parse(HikJsonHelper.SerializeObject(Model));
+            string Content=client.Execute(TaskApiName.TaskApiName_QueryPodBerthAndMat, param);
+
+            //log.Info("更新地图中料架与地图坐标之间的关系:"+Content);
+
+            HikDataResult<List<QueryPodBerthAndMatResultDTO>> dataResult = HikJsonHelper.DeserializeObject<HikDataResult<List<QueryPodBerthAndMatResultDTO>>>(Content);
+
+            if (dataResult.code == 0)
+            {
+                List<QueryPodBerthAndMatResultDTO> listResult = dataResult.data;
+                listResult = listResult.IsNull() ? new List<QueryPodBerthAndMatResultDTO>() : listResult;
+
+                //托盘位置的处理
+                foreach (QueryPodBerthAndMatResultDTO ModelItem in listResult)
+                {
+                    string positionCode = ModelItem.positionCode;
+                    string podCode = ModelItem.podCode;
+
+                    PalletEntity PalletModel = ListPallet.FirstOrDefault(item=>item.PodCode== podCode);
+                    if (PalletModel != null)
+                    {
+                        PalletModel.PositionCode = ModelItem.positionCode;
+                    }
+                    if (PalletModel.PositionCode.IsNotEmpty())
+                    {
+                        PositionEntity BinEntity = ListMap.FirstOrDefault(item=>item.PositionCode== PalletModel.PositionCode);
+                        if (BinEntity != null)
+                        {
+                            PalletModel.PositionName = BinEntity.PositionName;
+                        }
+                    }
+                }
+                //ListPallet.Remove(item => !listResult.Exists(a => a.podCode == item.PodCode));
+                DomainContext.ListPallet = ListPallet;
+                //log.Info("坐标数据：" + HikJsonHelper.SerializeObject(ListPallet));
+
+                //坐标位置的处理
+                foreach (PositionEntity ModelItem in ListMap)
+                {
+                    ModelItem.HasCon = (int)EHikBool.No;
+                    ModelItem.PodCode = "";
+                    QueryPodBerthAndMatResultDTO ModelResult = listResult.FirstOrDefault(item=>item.positionCode==ModelItem.PositionCode);
+                    if (ModelResult != null)
+                    {
+                        if (ModelResult.podCode.IsNotEmpty())
+                        {
+                            ModelItem.HasCon = (int)EHikBool.Yes;
+                            ModelItem.PodCode = ModelResult.podCode;
+                        }
+                        else
+                        {
+                            ModelItem.HasCon = (int)EHikBool.No;
+                            ModelItem.PodCode = "";
+                        }
+                    }
+
+                    if (ModelItem.PositionName == "A-1")
+                    {
+                        ModelItem.Num = DomainContext.Interactive_One.DB_RobotToAgv_Palletizing_Left_Num;
+                        ModelItem.TotalNum = DomainContext.Interactive_One.DB_RobotToAgv_Palletizing_Left_TotalNum;
+                        ModelItem.Status = DomainContext.Interactive_One.DB_RobotToAgv_Palletizing_LeftGrating_Status;
+                    }
+                    else if (ModelItem.PositionName == "A-2")
+                    {
+                        ModelItem.Num = DomainContext.Interactive_One.DB_RobotToAgv_Palletizing_Right_Num;
+                        ModelItem.TotalNum = DomainContext.Interactive_One.DB_RobotToAgv_Palletizing_Right_TotalNum;
+                        ModelItem.Status = DomainContext.Interactive_One.DB_RobotToAgv_Palletizing_RightGrating_Status;
+                    }
+                    else if (ModelItem.PositionName == "C-1")
+                    {
+                        ModelItem.Num = DomainContext.Interactive_Two.DB_RobotToAgv_Palletizing_Left_Num;
+                        ModelItem.TotalNum = DomainContext.Interactive_Two.DB_RobotToAgv_Palletizing_Left_TotalNum;
+                        ModelItem.Status = DomainContext.Interactive_Two.DB_RobotToAgv_Palletizing_LeftGrating_Status;
+                    }
+                    else if (ModelItem.PositionName == "C-2")
+                    {
+                        ModelItem.Num = DomainContext.Interactive_Two.DB_RobotToAgv_Palletizing_Right_Num;
+                        ModelItem.TotalNum = DomainContext.Interactive_Two.DB_RobotToAgv_Palletizing_Right_TotalNum;
+                        ModelItem.Status = DomainContext.Interactive_Two.DB_RobotToAgv_Palletizing_RightGrating_Status;
+                    }
+                }
+                //log.Info("地图数据：" + HikJsonHelper.SerializeObject(ListMap));
+            }
+        }
+
+        /// <summary>
+        /// 开始一个新的搬运任务
+        /// </summary>
+        /// <param name="reqCode">请求唯一编号</param>
+        /// <param name="currentPositionCode">当前坐标</param>
+        /// <param name="method">参数方法</param>
+        /// <param name="robotCode">AGV编号</param>
+        /// <param name="podCode">货架编号</param>
+        /// <returns></returns>
+        public HikDataResult StartTask(string reqCode, string currentPositionCode,string method,string robotCode,string podCode)
+        {
+            HikDataResult HikDataResult = new HikDataResult();
+
+            currentPositionCode = currentPositionCode.IsEmpty() ? "" : currentPositionCode;
+
+            //坐标转换
+            List<PositionEntity> ListMap = DomainContext.ListMap;
+            ListMap = ListMap.IsNull() ? new List<PositionEntity>() : ListMap;
+
+            //List<QueryAgvStatusResultDTO> ListAgvStatus = DomainContext.ListAgv;
+            //if (ListAgvStatus.IsNullOrEmpty())
+            //{
+            //    HikDataResult.code = (int)EHikResponseCode.Exception;
+            //    HikDataResult.message = "AGV的已经处于失联状态,无法进行任务下发";
+            //    return HikDataResult;
+            //}
+            //QueryAgvStatusResultDTO AgvModel = null;
+            //if (robotCode.IsNotEmpty())
+            //{
+            //    AgvModel = ListAgvStatus.FirstOrDefault(item=>item.robotCode==robotCode);
+            //}
+            //if (AgvModel == null)
+            //{
+            //    AgvModel = ListAgvStatus.FirstOrDefault();
+            //}
+            //if (AgvModel.status != "4" && AgvModel.status != "1")
+            //{
+            //    HikDataResult.code = (int)EHikResponseCode.Exception;
+            //    HikDataResult.message = "AGV处于异常或工作状态,无法进行新的任务下发";
+            //    return HikDataResult;
+            //}
+
+            PositionEntity CurrentBin = ListMap.Where(item => item.PositionCode == currentPositionCode).FirstOrDefault();
+
+            PositionEntity StartBin = null;
+            PositionEntity EndBin = null;
+
+            // 如果AGV的位置在如上四个点：判断是否已经码垛完成的任务，如果有有则搬运工台位置，如果没有码垛完成的，则搬运到A-2申请点
+            if (CurrentBin != null)
+            {
+                List<string> ListBtn = new List<string>() { "A-1", "A-2", "C-1", "C-2" };
+                //判断当前AGV的停靠位置
+                if (ListBtn.Exists(item => item == CurrentBin.PositionName))
+                {
+                    if (CurrentBin.PositionName.StartsWith("A"))
+                    {
+                        StartBin = ListMap.Where(item => ListBtn.Exists(btn => btn == item.PositionName))
+                            .Where(item => item.HasCon == (int)EHikBool.Yes && item.PodCode.IsNotEmpty() && item.PositionCode != currentPositionCode)
+                            .Where(item => item.Num > 0 && item.TotalNum > 0 && item.Num == item.TotalNum)
+                            .FirstOrDefault();
+                    }
+                    else if (CurrentBin.PositionName.StartsWith("C"))
+                    {
+                        ListBtn = new List<string>() { "C-1", "C-2", "A-1", "A-2" };
+                        StartBin = ListMap.Where(item => ListBtn.Exists(btn => btn == item.PositionName))
+                            .Where(item => item.HasCon == (int)EHikBool.Yes && item.PodCode.IsNotEmpty() && item.PositionCode != currentPositionCode)
+                            .Where(item => item.Num > 0 && item.TotalNum > 0 && item.Num == item.TotalNum)
+                            .FirstOrDefault();
+                    }
+
+                    if (StartBin != null)
+                    {
+                        if (StartBin.PositionName == "A-1" || StartBin.PositionName == "A-2")
+                        {
+                            EndBin = ListMap.Where(item => item.PositionName == "B-1" || item.PositionName == "B-2")
+                                .Where(item => item.HasCon == (int)EHikBool.No || item.PodCode.IsEmpty())
+                                .FirstOrDefault();
+                        }
+                        else if (StartBin.PositionName == "C-1" || StartBin.PositionName == "C-2")
+                        {
+                            EndBin = ListMap.Where(item => item.PositionName == "D-1" || item.PositionName == "D-2")
+                            .Where(item => item.HasCon == (int)EHikBool.No || item.PodCode.IsEmpty())
+                            .FirstOrDefault();
+                        }
+                    }
+                    else
+                    {
+                        StartBin = CurrentBin;
+                        EndBin = ListMap.Where(item => item.PositionName == "Apply_A-1").FirstOrDefault();
+                    }
+                }
+                else
+                {
+                    StartBin = ListMap.Where(item => item.HasCon == (int)EHikBool.Yes && item.PodCode.IsNotEmpty())
+                            .Where(item => item.Num > 0 && item.TotalNum > 0 && item.Num == item.TotalNum)
+                            .FirstOrDefault();
+                    if (StartBin != null)
+                    {
+                        if (StartBin.PositionName == "A-1" || StartBin.PositionName == "A-2")
+                        {
+                            EndBin = ListMap.Where(item => item.PositionName == "B-1" || item.PositionName == "B-2")
+                                .Where(item => item.HasCon == (int)EHikBool.No || item.PodCode.IsEmpty())
+                                .FirstOrDefault();
+                        }
+                        else if (StartBin.PositionName == "C-1" || StartBin.PositionName == "C-2")
+                        {
+                            EndBin = ListMap.Where(item => item.PositionName == "D-1" || item.PositionName == "D-2")
+                            .Where(item => item.HasCon == (int)EHikBool.No || item.PodCode.IsEmpty())
+                            .FirstOrDefault();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                StartBin = ListMap.Where(item => item.HasCon == (int)EHikBool.Yes && item.PodCode.IsNotEmpty())
+                            .Where(item => item.Num > 0 && item.TotalNum > 0 && item.Num == item.TotalNum)
+                            .FirstOrDefault();
+                if (StartBin != null)
+                {
+                    if (StartBin.PositionName == "A-1" || StartBin.PositionName == "A-2")
+                    {
+                        EndBin = ListMap.Where(item => item.PositionName == "B-1" || item.PositionName == "B-2")
+                            .Where(item => item.HasCon == (int)EHikBool.No || item.PodCode.IsEmpty())
+                            .FirstOrDefault();
+                    }
+                    else if (StartBin.PositionName == "C-1" || StartBin.PositionName == "C-2")
+                    {
+                        EndBin = ListMap.Where(item => item.PositionName == "D-1" || item.PositionName == "D-2")
+                        .Where(item => item.HasCon == (int)EHikBool.No || item.PodCode.IsEmpty())
+                        .FirstOrDefault();
+                    }
+                }
+            }
+            
+            if (StartBin == null || EndBin == null)
+            {
+                log.Info("货架坐标已经混乱，请初始化之后处理");
+                HikDataResult.code = (int)EHikResponseCode.Exception;
+                HikDataResult.message = "货架坐标已经混乱，请初始化之后处理";
+                return HikDataResult;
+            }
+
+
+            GenTaskRequestDTO StartModel = new GenTaskRequestDTO();
+            StartModel.reqCode = ConvertHelper.NewGuid().SubString(25);
+            StartModel.reqTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            StartModel.clientCode = "WMS";
+            StartModel.taskTyp = "T02";
+            StartModel.positionCodePath = new List<PositionDTO>();
+            
+            if (StartBin.PositionName == "Apply_A-1")
+            {
+                StartModel.taskTyp = "T02";
+                StartModel.podCode = podCode;
+                StartModel.agvCode = robotCode;
+                StartModel.positionCodePath.Add(new PositionDTO() { positionCode = EndBin.PositionCode, type = "00" });
+            }
+            else if(StartBin.PositionName == "A-1" || StartBin.PositionName == "C-1" || StartBin.PositionName == "A-2" || StartBin.PositionName == "C-2")
+            {
+                StartModel.taskTyp = "T03";
+                StartModel.positionCodePath.Add(new PositionDTO() { positionCode = StartBin.PositionCode, type = "00" });
+                StartModel.positionCodePath.Add(new PositionDTO() { positionCode = EndBin.PositionCode, type = "00" });
+            }
+
+            log.Info("搬回货架：" + HikJsonHelper.SerializeObject(StartModel));
+            IHikTopClient client = new HikTopClientDefault();
+            JObject param = JObject.Parse(HikJsonHelper.SerializeObject(StartModel));
+            string Content = client.Execute(TaskApiName.TaskApiName_genAgvSchedulingTask, param);
+
+            //如果AGV进入码垛位光栅的处理
+            if (true)
+            {
+                Task.Factory.StartNew(()=> 
+                {
+                    Task.Delay(3000);
+                    InovanceModbusClient ModbusClient = DomainContext.ModbusClient;
+                    if (EndBin.PositionName == "A-1" || EndBin.PositionName == "C-1")
+                    {
+                        ModbusClient.Write_Palletizing_AgvMove_LeftGrating(EndBin.PositionCode, 1);
+                    }
+                    if (EndBin.PositionName == "A-2" || EndBin.PositionName == "C-2")
+                    {
+                        ModbusClient.Write_Palletizing_AgvMove_RightGrating(EndBin.PositionCode, 1);
+                    }
+                });
+            }
+
+            //如果AGV离开码垛位光栅的处理
+            if (true)
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    Task.Delay(3000);
+                    InovanceModbusClient ModbusClient = DomainContext.ModbusClient;
+                    if (EndBin.PositionName == "A-1" || EndBin.PositionName == "C-1")
+                    {
+                        ModbusClient.Write_Palletizing_AgvMove_LeftGrating(EndBin.PositionCode, 0);
+                    }
+                    if (EndBin.PositionName == "A-2" || EndBin.PositionName == "C-2")
+                    {
+                        ModbusClient.Write_Palletizing_AgvMove_RightGrating(EndBin.PositionCode, 0);
+                    }
+                });
+            }
+
+
+            HikDataResult.code = (int)EHikResponseCode.Success;
+            HikDataResult.message = "自动搬回货架指令下发成功";
+
+            return HikDataResult;
+        }
+
+        /// <summary>
+        /// 查询AGV的状态
+        /// </summary>
+        /// <returns></returns>
+        public HikDataResult QueryAgv()
+        {
+            HikDataResult dataResult = new HikDataResult();
+
+            List<PositionEntity> ListMap = DomainContext.ListMap;
+            ListMap = ListMap.IsNull() ? new List<PositionEntity>() : ListMap;
+
+            QueryAgvStatusRequestDTO QueryModel = new QueryAgvStatusRequestDTO();
+            QueryModel.reqCode = ConvertHelper.NewGuid().SubString(25);
+            QueryModel.reqTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            QueryModel.clientCode = "WMS";
+            QueryModel.tokenCode = "";
+            QueryModel.mapShortName = ListMap.First().MapShortName;
+
+            string BaseApi= ResourceManager.GetSettingEntity("HikRobot_API_URL").Value;
+            IHikTopClient client = new HikTopClientDefault(BaseApi);
+            JObject param = JObject.Parse(HikJsonHelper.SerializeObject(QueryModel));
+            string Content = client.Execute(TaskApiName.TaskApiName_QueryAgvStatus, param);
+
+            log.Info("查询AGV的状态："+Content);
+
+            HikDataResult<List<QueryAgvStatusResultDTO>> QueryDataResult = HikJsonHelper.DeserializeObject<HikDataResult<List<QueryAgvStatusResultDTO>>>(Content);
+
+            List<QueryAgvStatusResultDTO> ListResult = QueryDataResult.data;
+            ListResult = ListResult.IsNull() ? new List<QueryAgvStatusResultDTO>() : ListResult;
+
+            DomainContext.ListAgv = ListResult;
+
+            dataResult.code = (int)EHikResponseCode.Success;
+            dataResult.message = "响应成功";
+
+            return dataResult;
+        }
+    }
+}
